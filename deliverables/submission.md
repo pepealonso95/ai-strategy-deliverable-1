@@ -301,7 +301,7 @@ Required markdown structure:
 - OpenAI Evals API: selected because each prompt and extraction path can regress independently; the eval layer gives repeatable JSONL-based checks instead of subjective spot checks.
 
 **Automation and orchestration:**
-- Next.js App Router on Vercel: selected because the project needs a simple deployable web and API surface, and App Router provides the cron endpoint with minimal infrastructure overhead.
+- Next.js App Router on Vercel: selected because the project needs a deployable web frontend and API surface. The App Router provides the cron endpoint, and the frontend renders the latest reports, risk scores, and per-source health cards so Product Strategy can check a dashboard instead of opening raw markdown files.
 - Vercel Cron Jobs: selected because the monitoring cadence is daily and deterministic, so a managed scheduler is simpler than maintaining a separate worker or queue system.
 
 **Data storage and retrieval:**
@@ -341,275 +341,116 @@ Required markdown structure:
 - Confidence scoring: yes, at the signal level and the final strategy-brief level
 - Run health visibility: the API result and markdown outputs explicitly flag fixture-mode or failed-live-collection sources, and source metadata records `fetch_provider`, `parse_mode`, and `fallback_reason`
 
-Real sample structured output from the latest live run on 2026-03-30:
+Real sample structured output from the latest fixture-or-degraded run on 2026-03-30:
 
 ```json
 {
-  "agent_name": "Anthropic Monitor",
-  "source_id": "anthropic-news",
-  "source_label": "Anthropic official announcements",
+  "agent_name": "claude-code-changelog-monitor",
+  "source_id": "claude-code-changelog",
+  "source_label": "Claude Code changelog",
   "competitor": "anthropic",
   "is_material": true,
-  "executive_summary": "First snapshot for Anthropic news surface. Notable announcements include a $100M investment into the Claude Partner Network, introduction of The Anthropic Institute, expansion with a new Asia-Pacific office in Sydney, and a model upgrade statement (Opus 4.6). Also includes a messaging/positioning update that Claude will remain ad-free.",
+  "executive_summary": "Fixture mode enabled. Synthetic test data only. Claude Code changelog fixture bundle: dated releases, model support updates, and workflow quality improvements.",
   "signals": [
     {
-      "id": "anthropic-news-2026-03-30-1",
+      "id": "claude-code-changelog-0-2026-03-30",
       "run_date": "2026-03-30",
       "competitor": "anthropic",
-      "source_name": "Anthropic Newsroom",
-      "source_url": "https://www.anthropic.com/news",
-      "signal_type": "model-upgrade",
-      "headline": "Opus 4.6 positioned as upgraded smartest model across agentic coding and tool use",
-      "summary": "Anthropic states it is upgrading its “smartest model,” highlighting Opus 4.6 performance across agentic coding, computer use, tool use, search, and finance.",
+      "source_name": "Claude Code changelog",
+      "source_url": "https://code.claude.com/docs/en/changelog",
+      "signal_type": "official_update",
+      "headline": "Claude Code 2.1.86",
+      "summary": "Added support for a newer Claude Sonnet release and improved CLI reliability.",
       "evidence": [
-        "We’re upgrading our smartest model. Across agentic coding, computer use, tool use, search, and finance, Opus 4.6 is an industry-leading model, often by wide margin."
+        "https://code.claude.com/docs/en/changelog"
       ],
-      "published_at": null,
+      "published_at": "2026-03-30T21:30:16.809Z",
       "strategic_relevance": "high",
-      "confidence": 0.66,
-      "status": "new"
-    },
-    {
-      "id": "anthropic-news-2026-03-30-2",
-      "run_date": "2026-03-30",
-      "competitor": "anthropic",
-      "source_name": "Anthropic Newsroom",
-      "source_url": "https://www.anthropic.com/news",
-      "signal_type": "messaging-positioning",
-      "headline": "Claude remains ad-free; rationale for ad-free approach",
-      "summary": "Anthropic reiterates a commitment that Claude will remain ad-free, framing advertising incentives as incompatible with a helpful assistant and describing plans to expand access without compromising trust.",
-      "evidence": [
-        "We’ve made a choice: Claude will remain ad-free. We explain why advertising incentives are incompatible with a genuinely helpful AI assistant, and how we plan to expand access without compromising user trust."
-      ],
-      "published_at": null,
-      "strategic_relevance": "medium",
-      "confidence": 0.62,
-      "status": "new"
-    },
-    {
-      "id": "anthropic-news-2026-03-30-3",
-      "run_date": "2026-03-30",
-      "competitor": "anthropic",
-      "source_name": "Anthropic Newsroom",
-      "source_url": "https://www.anthropic.com/news",
-      "signal_type": "partner-programs-funding",
-      "headline": "Anthropic invests $100M into the Claude Partner Network",
-      "summary": "Announcement that Anthropic invests $100 million into the Claude Partner Network.",
-      "evidence": [
-        "Mar 12, 2026AnnouncementsAnthropic invests $100 million into the Claude Partner Network"
-      ],
-      "published_at": "2026-03-12",
-      "strategic_relevance": "high",
-      "confidence": 0.72,
-      "status": "new"
-    },
-    {
-      "id": "anthropic-news-2026-03-30-4",
-      "run_date": "2026-03-30",
-      "competitor": "anthropic",
-      "source_name": "Anthropic Newsroom",
-      "source_url": "https://www.anthropic.com/news",
-      "signal_type": "organization-initiative",
-      "headline": "Introducing The Anthropic Institute",
-      "summary": "Announcement of “The Anthropic Institute.”",
-      "evidence": [
-        "Mar 11, 2026AnnouncementsIntroducing The Anthropic Institute"
-      ],
-      "published_at": "2026-03-11",
-      "strategic_relevance": "medium",
-      "confidence": 0.6,
-      "status": "new"
-    },
-    {
-      "id": "anthropic-news-2026-03-30-5",
-      "run_date": "2026-03-30",
-      "competitor": "anthropic",
-      "source_name": "Anthropic Newsroom",
-      "source_url": "https://www.anthropic.com/news",
-      "signal_type": "geographic-expansion",
-      "headline": "Sydney becomes Anthropic’s fourth office in Asia-Pacific",
-      "summary": "Announcement that Sydney will become Anthropic’s fourth office in Asia-Pacific.",
-      "evidence": [
-        "Mar 10, 2026AnnouncementsSydney will become Anthropic’s fourth office in Asia-Pacific"
-      ],
-      "published_at": "2026-03-10",
-      "strategic_relevance": "medium",
-      "confidence": 0.6,
-      "status": "new"
+      "confidence": 0.76,
+      "status": "updated"
     }
   ],
   "benchmark_snapshots": [],
   "repo_metrics": [],
   "notes": [
-    "No previous snapshot was available, so all items above are marked as new based on the current Anthropic news surface.",
-    "Source is treated as secondary coverage vs. Claude Code changelog for developer-product updates; only higher-level official announcements/messages were extracted from the provided bundle text."
+    "First observed snapshot for this source."
   ]
 }
 ```
 
-Sample raw markdown output:
+Sample raw markdown output (truncated to executive summary):
 
 ```markdown
-# Raw Competitor Intelligence Report — 2026-03-30
+# OpenAI Competitor Intelligence Report - 2026-03-30
 
 ## Executive summary
-- **Anthropic (anthropic-news)**: First captured signals—**Opus 4.6** positioned as the upgraded “smartest model” for agentic coding/tool/computer use; reiterated **Claude remains ad-free**; plus **$100M** into the Claude Partner Network, **The Anthropic Institute**, and **Sydney** as a new Asia-Pacific office.
-- **Google Gemini (gemini-release-notes)**: Multiple new/rolling rollouts across consumer and Chrome experiences—**Personal Intelligence beta** (context from Google apps), **Gemini 3.1 Pro** global rollout, **upgraded Gemini 3 Deep Think** for Ultra, and **Chrome side-panel + auto-browse preview** (US, Pro/Ultra).
-- **Perplexity (perplexity-comet + perplexity-blog)**: Changelog points to stronger **Search API controls** (e.g., `max_tokens`, `last_updated_filter`) and more **agentic web execution** (multi-step searches + URL fetching, real-time thought streaming). Research articles index flags release of **pplx-embed-v1** and **pplx-embed-context-v1** for web-scale retrieval.
-- **Market benchmarks snapshot availability**: **No prior baselines** were available for most leaderboards; some sources provided **no row-level data** (notably Scale SWE-bench Pro, LiveBench). Where data exists (Arena + Artificial Analysis), it’s a **single-point capture**.
-- **Community buzz**: Mostly LocalLLaMA/Reddit/GitHub activity—directional signals around **local agent tooling** and **TurboQuant/Claude Code integration friction**; single-user claims weighted as lower confidence.
 
----
+- 12 monitored source bundles produced material findings.
+- This report preserves official competitor updates, benchmark movement, community buzz, and OpenAI baseline context.
 
 ## Official competitor signals
 
-### Anthropic — Official announcements (first capture)
-Source: https://www.anthropic.com/news
-- **Opus 4.6 positioned as upgraded “smartest model”** (confidence **0.66**)  
-  Evidence: “We’re upgrading our smartest model. Across agentic coding, computer use, tool use, search, and finance, **Opus 4.6**…”
-- **Claude remains ad-free; advertising incentives vs trust** (confidence **0.62**)  
-  Evidence: “**Claude will remain ad-free**…”
-- **$100M investment into the Claude Partner Network** (published **2026-03-12**, confidence **0.72**)  
-  Evidence: “Anthropic invests **$100 million** into the Claude Partner Network”
-- **Introducing The Anthropic Institute** (published **2026-03-11**, confidence **0.60**)  
-- **Sydney becomes Anthropic’s 4th APAC office** (published **2026-03-10**, confidence **0.60**)
+## Claude Code changelog
 
-### Claude Code Changelog Monitor
-- **No material changelog content extracted** in this bundle (confidence not applicable; flagged as *not material*).  
-  Notes indicate only changelog navigation/version links were present, so **no dated workflow/product changes** could be verified.
+Fixture mode enabled. Synthetic test data only. Claude Code changelog fixture bundle: dated releases, model support updates, and workflow quality improvements.
+```
 
-### Google Gemini — Release notes (new/rolling items)
-Source: https://gemini.google/release-notes/
-- **Personal Intelligence beta (connect to Google apps)**, US rollout for **Pro/Ultra** (confidence **0.69**)  
-  Evidence: connects to Gmail/Photos/YouTube/Search; not yet for Workspace business/education.
-- **Gemini 3.1 Pro global rollout** to Gemini app (confidence **0.78**)  
-- **Upgraded Gemini 3 Deep Think** for Google AI Ultra subscribers (confidence **0.73**)  
-- **Gemini in Chrome major side-panel + auto-browse preview in US for Pro/Ultra** (confidence **0.70**)  
-  Evidence: auto-browse preview US; not available for Workspace business/education plans.
+Sample strategy brief output from the same run:
 
-### Perplexity — Changelog / Search API & agentic execution
-Source: https://docs.perplexity.ai/docs/resources/changelog
-- **New `max_tokens` extraction cap** for search page token extraction (confidence **0.78**)  
-  Evidence: “New max_tokens parameter: Control the maximum tokens extracted per page…”
-- **New `last_updated_filter` for freshness by last updated** (confidence **0.78**)  
-  Evidence: “last_updated_filter… Filter… by when content was last updated…”
-- **Multi-step web execution + real-time thought streaming** (confidence **0.80**)  
-  Evidence: automatic multi web-search + URL fetching; “Real-time thought streaming”; tools mentioned (e.g., `web_search`, `fetch_url_content`).
-- **Crawler media upgrades**: auto-detect whether visual content adds value + smart media selection; configurable media types (confidence **0.72**)
-- **Developer workflow integrations**: Vercel AI SDK compatibility; MCP/VS Code/Claude Desktop config setup improvements (confidence **0.70**)
-- **Document analysis/extraction expanded**: multi-format ingestion + large document handling + multi-language analysis (confidence **0.66**)
+```markdown
+# OpenAI Strategy Brief - 2026-03-30
 
-### Perplexity — Research articles (embedding model release)
-Source: https://research.perplexity.ai/articles
-- **Release of `pplx-embed-v1` and `pplx-embed-context-v1`** for “real-world, web-scale retrieval” (confidence **0.78**)  
-  Evidence: “Today we are releasing… built for real-world, web-scale retrieval.”
+## Headline
 
----
+OpenAI remains strong on broad product surface, but distribution and workflow UX pressure are increasing.
 
-## Leaderboard and benchmark overview
+## What changed
 
-### Scale SWE-bench Pro (coding-agent risk priority)
-- **No defensible row-level monitoring possible** in this run.  
-  Evidence from monitor: extracted content lacked a full leaderboard table; only ambiguous snippets were present.
-- **Material change:** *Not reported* (insufficient data).
+- Competitors continue packaging agentic workflows around official product surfaces.
+- Benchmark leadership remains fragmented across coding, general reasoning, and public preference boards.
+- Community attention is amplifying expectations for faster product iteration and developer tooling momentum.
 
-### LiveBench
-- **No leaderboard rows/scores extracted** → no movement signals possible.  
-- **Material change:** *Not reported*.
+## What OpenAI should focus on
 
-### LMSYS Arena (Text top-10 capture; single-point)
-Source: https://lmarena.ai/leaderboard (Arena leaderboard, Text)
-- **Top model (#1):** Anthropic `claude-opus-4-6-thinking` — **1504** (votes 12,730)
-- **#2:** Anthropic `claude-opus-4-6` — **1500** (votes 13,553)
-- **#3:** Gemini `gemini-3.1-pro-preview` — **1493**
-- **#4:** xAI `grok-4.20-beta1` — **1491**
-- **#5:** Gemini `gemini-3-pro` — **1486**
-- **#6:** OpenAI `gpt-5.4-high` — **1484**
-- **#7:** xAI `grok-4.20-beta-0309-reasoning` — **1483**
-- **#8:** OpenAI `gpt-5.2-chat-latest-20260210` — **1480**
-- **#9:** Gemini `gemini-3-flash` — **1474**
-- **#10:** Anthropic `claude-opus-4-5-20251101-thinking-32k` — **1474**
+- Track browser and agent workflow UX expectations, not just model quality rankings.
+- Watch benchmark categories where OpenAI leadership is narrow or unstable.
+- Respond quickly when official competitor launches combine distribution with differentiated workflow utility.
 
-**Material change:** *No delta analysis possible* (no prior snapshot provided).
+## Defensive posture
 
-### Artificial Analysis (Intelligence Index excerpt; single-point)
-Source: https://artificialanalysis.ai/
-- **Rank 1 tie:** Gemini `Gemini 3.1 Pro Preview` — **57**
-- **Rank 1 tie:** OpenAI `GPT-5.4 (xhigh)` — **57**
-- **Rank 3:** Anthropic `Claude Opus 4.6 (max)` — **53**
-- **Rank 4:** Anthropic `Claude Sonnet 4.6 (max)` — **52**
-- **Rank 5:** `GLM-5` — **50**
-- **Rank 6:** xAI `Grok 4.20 Beta 0309` — **48**
+- OpenAI retains a broad public lineup across API, ChatGPT, and multimodal offerings.
+- Benchmark leadership remains competitive across important categories in the monitored bundle.
+- OpenAI exposures:
+- Gemini can use Google distribution to normalize rapid feature rollout at scale.
+- Perplexity is pushing browser-native execution narratives that may shape user expectations.
 
-Notes: monitor flags ambiguous repeated/other numeric blocks; only the clearly stated excerpt above is treated as reliable.
+## Risk score and rationale
 
-**Material change:** *No delta analysis possible* (no prior snapshot provided).
+- Risk score: 47/100
+- Confidence: 70%
 
-### LLM Stats benchmarks page (context, not structured scores)
-Source: https://llm-stats.com/benchmarks
-- Monitor reports this page as an **index/directory** with category counts and **featured benchmark tiles** (GPQA, MMLU Pro, AIME 2025) rather than a full structured leaderboard.
-- Featured tiles show **cross-vendor visibility** (OpenAI + Google prominently; additional vendors on MMLU Pro), but **no explicit structured score movement** extracted.
+## Supporting evidence
 
----
+- Official competitor announcement bundles
+- Daily leaderboard bundle
+- Community buzz bundle
+- OpenAI public baseline bundle
 
-## Community buzz
+## Collection health
 
-Primary sources: Reddit r/LocalLLaMA + GitHub release/momentum snapshots
-
-### TurboQuant / RaBitQ / local implementation contention (lower confidence, single-community claims)
-- **Technical clarification request:** RaBitQ first author alleges TurboQuant relationship description/theory/empirical disclosure may be incomplete or inaccurate; points to OpenReview thread (confidence **0.45**).
-- **Android/llama.cpp integration friction:** user reports compilation but missing expected TurboQuant type registration in binary; expects upstream PRs later (confidence **0.35**).
-- **Research critique draft:** rotation hypothesis discussion around reconstruction vs sparsity tradeoffs; includes repo/draft (confidence **0.30**).
-
-### Developer adoption friction / operational issues
-- **Claude Code KV-cache invalidation PSA (high relevance):** post claims Claude Code mutates prompts per request (telemetry + git status), breaking exact KV-cache matching; suggests env/config mitigations (confidence **0.40**).
-
-### Tooling/prodivity narratives (moderate directional signals)
-- **MCP “Slim proxy” (~96% context saving claim)** using local semantic search over tool schemas (confidence **0.55**).
-- **Local agent workflow report:** user running Qwen3.5-27B as local primary model with OpenCode + MCP context improvements (confidence **0.50**).
-- **llamafile v0.10.0 build system update** aligned to newer llama.cpp functionality (confidence **0.60**).
-
-### GitHub momentum snapshot (directional only; not performance proof)
-Captured repo stats include:
-- anthropics/anthropic-sdk-typescript (stars 1779, forks 261)
-- anthropics/claude-cookbooks (stars 36721, forks 3988)
-- googleapis/js-genai (stars 1532, forks 233)
-- google-gemini/gemini-cli (stars 99561, forks 12740)
-
----
-
-## OpenAI baseline (product + pricing baseline)
-
-Source bundles:
-- OpenAI News RSS: https://openai.com/news/rss.xml
-- Models API list: https://api.openai.com/v1/models
-
-### OpenAI official signals captured (news)
-- **Safety Bug Bounty program** (published **2026-03-25**, confidence **0.70**)
-- **Public framework: “Inside our approach to the Model Spec”** (published **2026-03-25**, confidence **0.66**)
-- **Teen safety policies for developers using `gpt-oss-safeguard`** (published **2026-03-24**, confidence **0.65**)
-- **Creating with Sora Safely** (published **2026-03-23**, confidence **0.60**)
-- **Disaster response workshop in Asia** (published **2026-03-29**, confidence **0.55**, lower strategic relevance)
-
-### OpenAI API model lineup (Models API list)
-Captured active model IDs include:
-- **GPT-5.4 family variants** (e.g., `gpt-5.4`, `gpt-5.4-pro`, `gpt-5.4-mini`, `gpt-5.4-nano`, plus dated snapshots) — confidence **0.78**
-- **Audio + realtime endpoints** (e.g., `gpt-audio-1.5`, `gpt-realtime-1.5`, mini variants, TTS mini) — confidence **0.74**
-- **Coding/developer variants** (e.g., `gpt-5.3-codex`, `gpt-5.2-codex`) — confidence **0.65**
-- **Search preview + image alias** (`gpt-4o-search-preview`, `chatgpt-image-latest`) — confidence **0.66**
-
-**Material change:** *No diff vs prior snapshot possible* (previous snapshot not provided).
-
----
-
-## Confidence and caveats
-- **Baseline/delta limitations:** Many monitors report **no previous snapshot** (previous_snapshot=null). Where that’s the case, this report treats items as **new observations** and **does not assert movement**.
-- **Benchmark data quality varies by source**:
-  - **Scale SWE-bench Pro** and **LiveBench**: insufficient extraction for row-level conclusions.
-  - **Arena** and **Artificial Analysis**: provided **single-point excerpts**; no deltas.
-  - **LLM Stats**: treated as **contextual** (index/featured tiles), not as structured score truth.
-- **Community buzz weighting:** Reddit/GitHub signals are **directional** and often **single-reporter**. Some items are operationally useful (e.g., KV-cache PSA) but should not be treated as definitive across the ecosystem.
-- **Claude Code changelog:** the bundle appears to lack actual entry text (only navigation/version links), so **no product/workflow changes** were verified from that monitor in this run.
+- Claude Code changelog: fixture mode is enabled, so this source used synthetic test data instead of a live fetch. Expected extraction path: firecrawl/markdown.
+- Anthropic official announcements: fixture mode is enabled, so this source used synthetic test data instead of a live fetch. Expected extraction path: native/html.
+- Gemini release notes: fixture mode is enabled, so this source used synthetic test data instead of a live fetch. Expected extraction path: firecrawl/markdown.
+- Google Gemini blog: fixture mode is enabled, so this source used synthetic test data instead of a live fetch. Expected extraction path: native/html.
+- Perplexity Comet what's new: fixture mode is enabled, so this source used synthetic test data instead of a live fetch. Expected extraction path: native/html.
+- Perplexity blog: fixture mode is enabled, so this source used synthetic test data instead of a live fetch. Expected extraction path: native/html.
+- Scale SWE-bench Pro public leaderboard: fixture mode is enabled, so this source used synthetic test data instead of a live fetch. Expected extraction path: firecrawl/table.
+- LiveBench leaderboard: fixture mode is enabled, so this source used synthetic test data instead of a live fetch. Expected extraction path: native/table.
+- LMSYS Arena leaderboard: fixture mode is enabled, so this source used synthetic test data instead of a live fetch. Expected extraction path: native/table.
+- Artificial Analysis benchmark dashboard: fixture mode is enabled, so this source used synthetic test data instead of a live fetch. Expected extraction path: native/table.
+- LLM Stats benchmark index: fixture mode is enabled, so this source used synthetic test data instead of a live fetch. Expected extraction path: firecrawl/markdown.
+- OpenAI product and pricing baseline: fixture mode is enabled, so this source used synthetic test data instead of a live fetch. Expected extraction path: firecrawl/markdown.
+- Community buzz: Reddit and GitHub: fixture mode is enabled, so this source used synthetic test data instead of a live fetch. Expected extraction path: native/feed.
 ```
 
 ## 6. Knowledge Sources Used
@@ -640,6 +481,17 @@ Captured active model IDs include:
 - It outperforms manual monitoring on cadence and consistency because every source bundle is fetched, normalized, diffed, and analyzed the same way each day. When the Gemini release-notes page adds a new dated entry, the pipeline detects the content-hash change, runs the monitor agent only on the changed bundle, and surfaces the new entry as a structured signal, all before the workday starts.
 - Its structure improves clarity by separating factual source monitoring from the second-pass strategic interpretation and risk scoring. The raw report preserves per-source evidence and confidence, while the strategy brief synthesizes across sources and assigns a 1-to-100 risk score with explicit rationale, so the reader can drill down from strategic headline to underlying evidence.
 - The eval layer gives explicit visibility into prompt regressions and extraction quality rather than relying on qualitative judgment alone. Each of the 13 monitor agents, the report writer, and the strategy writer has a dedicated JSONL eval dataset and model-graded rubric, so a prompt change that degrades extraction quality is caught before it ships to production.
+- The system includes a lightweight web frontend built with Next.js App Router that surfaces the latest raw intelligence report, strategy brief, risk score, and per-source collection health cards, so Product Strategy can check the dashboard without opening markdown files.
+
+### Eval examples
+
+Each agent has a JSONL eval dataset fed to the OpenAI Evals API. Three representative cases:
+
+**Claude Code changelog monitor eval** — input bundle: `"Claude Code 2.1.86 adds support for Claude Sonnet 4.6 and improves slash-command reliability."` Expected: `is_material: true`, `competitor: "anthropic"`, `signal_type: "official_update"`. The model-graded rubric checks whether the monitor correctly captures dated release changes and model support updates without inventing roadmap claims. Failure: inventing an unsupported claim like "Claude Code now supports GPT models" would score 0.0.
+
+**Scale SWE-bench Pro monitor eval** — input bundle: explicit leaderboard rows `[{rank:1, vendor:"OpenAI", model:"GPT-5.4", score:74.2}, {rank:2, vendor:"Anthropic", model:"Claude Sonnet", score:71.8}]` with no prior snapshot. Expected: `is_material: false` (because initial snapshot without movement is not strategically material), `competitor: "market"`, `signal_type: "benchmark_shift"`. The rubric checks whether the monitor extracts ranks and scores accurately and flags ambiguity instead of fabricating benchmark movement. Failure: asserting "OpenAI widened its lead" when no prior snapshot exists would score 0.0.
+
+**Strategy writer eval** — input: a raw report summarizing enterprise messaging changes and mixed benchmark signals. Expected: risk score between 35 and 70, output must contain the phrases "Risk score", "What OpenAI should focus on", and "Supporting evidence". The rubric checks whether the memo separates fact from inference, provides practical recommendations, and assigns a justified risk score within the dataset bounds. Failure: a risk score of 85 driven entirely by Reddit speculation would score 0.0 because the scoring rules cap rumor-only evidence at 60.
 
 ## 10. Where the Agent Fails
 

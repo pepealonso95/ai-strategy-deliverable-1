@@ -93,7 +93,7 @@ ${prompt.contents.trim()}
 - OpenAI Evals API: selected because each prompt and extraction path can regress independently; the eval layer gives repeatable JSONL-based checks instead of subjective spot checks.
 
 **Automation and orchestration:**
-- Next.js App Router on Vercel: selected because the project needs a simple deployable web and API surface, and App Router provides the cron endpoint with minimal infrastructure overhead.
+- Next.js App Router on Vercel: selected because the project needs a deployable web frontend and API surface. The App Router provides the cron endpoint, and the frontend renders the latest reports, risk scores, and per-source health cards so Product Strategy can check a dashboard instead of opening raw markdown files.
 - Vercel Cron Jobs: selected because the monitoring cadence is daily and deterministic, so a managed scheduler is simpler than maintaining a separate worker or queue system.
 
 **Data storage and retrieval:**
@@ -139,10 +139,16 @@ Real sample structured output from the latest ${latestRunMode} run on ${args.run
 ${JSON.stringify(sampleBatch, null, 2)}
 \`\`\`
 
-Sample raw markdown output:
+Sample raw markdown output (truncated to executive summary):
 
 \`\`\`markdown
-${args.rawReportMarkdown.trim()}
+${args.rawReportMarkdown.split("\n").slice(0, 12).join("\n").trim()}
+\`\`\`
+
+Sample strategy brief output from the same run:
+
+\`\`\`markdown
+${args.strategyMarkdown.trim()}
 \`\`\`
 
 ## 6. Knowledge Sources Used
@@ -173,6 +179,17 @@ ${args.rawReportMarkdown.trim()}
 - It outperforms manual monitoring on cadence and consistency because every source bundle is fetched, normalized, diffed, and analyzed the same way each day. When the Gemini release-notes page adds a new dated entry, the pipeline detects the content-hash change, runs the monitor agent only on the changed bundle, and surfaces the new entry as a structured signal, all before the workday starts.
 - Its structure improves clarity by separating factual source monitoring from the second-pass strategic interpretation and risk scoring. The raw report preserves per-source evidence and confidence, while the strategy brief synthesizes across sources and assigns a 1-to-100 risk score with explicit rationale, so the reader can drill down from strategic headline to underlying evidence.
 - The eval layer gives explicit visibility into prompt regressions and extraction quality rather than relying on qualitative judgment alone. Each of the 13 monitor agents, the report writer, and the strategy writer has a dedicated JSONL eval dataset and model-graded rubric, so a prompt change that degrades extraction quality is caught before it ships to production.
+- The system includes a lightweight web frontend built with Next.js App Router that surfaces the latest raw intelligence report, strategy brief, risk score, and per-source collection health cards, so Product Strategy can check the dashboard without opening markdown files.
+
+### Eval examples
+
+Each agent has a JSONL eval dataset fed to the OpenAI Evals API. Three representative cases:
+
+**Claude Code changelog monitor eval** — input bundle: \`"Claude Code 2.1.86 adds support for Claude Sonnet 4.6 and improves slash-command reliability."\` Expected: \`is_material: true\`, \`competitor: "anthropic"\`, \`signal_type: "official_update"\`. The model-graded rubric checks whether the monitor correctly captures dated release changes and model support updates without inventing roadmap claims. Failure: inventing an unsupported claim like "Claude Code now supports GPT models" would score 0.0.
+
+**Scale SWE-bench Pro monitor eval** — input bundle: explicit leaderboard rows \`[{rank:1, vendor:"OpenAI", model:"GPT-5.4", score:74.2}, {rank:2, vendor:"Anthropic", model:"Claude Sonnet", score:71.8}]\` with no prior snapshot. Expected: \`is_material: false\` (because initial snapshot without movement is not strategically material), \`competitor: "market"\`, \`signal_type: "benchmark_shift"\`. The rubric checks whether the monitor extracts ranks and scores accurately and flags ambiguity instead of fabricating benchmark movement. Failure: asserting "OpenAI widened its lead" when no prior snapshot exists would score 0.0.
+
+**Strategy writer eval** — input: a raw report summarizing enterprise messaging changes and mixed benchmark signals. Expected: risk score between 35 and 70, output must contain the phrases "Risk score", "What OpenAI should focus on", and "Supporting evidence". The rubric checks whether the memo separates fact from inference, provides practical recommendations, and assigns a justified risk score within the dataset bounds. Failure: a risk score of 85 driven entirely by Reddit speculation would score 0.0 because the scoring rules cap rumor-only evidence at 60.
 
 ## 10. Where the Agent Fails
 
