@@ -4,7 +4,9 @@ Repository: https://github.com/pepealonso95/ai-strategy-deliverable-1
 
 ## 1. Company and Strategic Context
 
-OpenAI is the selected company. It operates in the frontier AI industry with a business model spanning API usage, subscriptions, and enterprise offerings; the key competitors in scope are Anthropic, Google Gemini, and Perplexity, and the internal stakeholder is Product Strategy leadership.
+OpenAI is the selected company; it operates in the frontier AI industry with a business model spanning API usage, subscriptions, and enterprise offerings, competing primarily against Anthropic, Google Gemini, and Perplexity. The internal stakeholder this agent serves is the VP of Product Strategy, who owns competitive positioning and product roadmap prioritization decisions.
+
+The agent's monitoring scope covers three competitors (Anthropic, Google Gemini, Perplexity) across their official product surfaces, five public benchmark leaderboards, and community signals from Reddit and GitHub. It runs on a daily automated cadence via Vercel Cron. The intelligence supports competitive positioning decisions, benchmark risk assessment, and product roadmap prioritization for Product Strategy leadership at OpenAI.
 
 ## 2. Agent Prompt
 
@@ -294,16 +296,27 @@ Required markdown structure:
 
 ## 3. Technologies Used
 
-- OpenAI Agents SDK with `gpt-5.4-nano`: selected because the system is a constrained multi-agent workflow with typed tools and structured outputs, so the SDK provides the runtime for monitor agents, the raw report writer, and the strategy writer without building custom orchestration glue.
+**LLM platform:**
+- OpenAI Agents SDK with `gpt-5.4-nano`: selected because the system is a constrained multi-agent workflow with typed tools and structured outputs, so the SDK provides the runtime for monitor agents, the raw report writer, and the strategy writer without building custom orchestration glue. `gpt-5.4-nano` was chosen for cost efficiency, since monitor agents run daily across 13 source bundles and a smaller model keeps per-run cost low while still producing structured JSON reliably.
 - OpenAI Evals API: selected because each prompt and extraction path can regress independently; the eval layer gives repeatable JSONL-based checks instead of subjective spot checks.
+
+**Automation and orchestration:**
 - Next.js App Router on Vercel: selected because the project needs a simple deployable web and API surface, and App Router provides the cron endpoint with minimal infrastructure overhead.
 - Vercel Cron Jobs: selected because the monitoring cadence is daily and deterministic, so a managed scheduler is simpler than maintaining a separate worker or queue system.
+
+**Data storage and retrieval:**
 - Vercel Blob: selected because the generated markdown artifacts need lightweight object storage in production without adding a separate storage service.
 - Vercel Postgres: selected because snapshots, runs, signals, benchmark rows, and eval registry metadata are relational and need persistence across runs.
-- Firecrawl HTTP API: selected for JS-heavy, layout-fragile, or weakly structured pages where native HTTP fetch frequently misses the main content or benchmark table.
+
+**Scraping and monitoring:**
+- Firecrawl HTTP API: selected for JS-heavy, layout-fragile, or weakly structured pages where native HTTP fetch frequently misses the main content or benchmark table. Used only for sources that require it, keeping Firecrawl API costs proportional.
 - Native `fetch` plus Cheerio: selected as the default low-cost path for stable HTML, JSON, XML/RSS, Reddit feeds, GitHub APIs, and deterministic normalization.
+
+**APIs and third-party services:**
 - GitHub REST API and Reddit JSON feeds: selected because they provide lightweight structured community and momentum signals without requiring browser automation.
 - Vitest: selected to cover parser logic, contracts, and end-to-end pipeline behavior before shipping prompt or collector changes.
+
+**Cost and operational feasibility:** the system monitors 13 sources daily, which is operationally manageable. Change gating ensures that unchanged source bundles skip the LLM pass entirely, reducing daily token spend. Firecrawl is reserved for 5 sources that require it; the remaining 8 use free native `fetch`. The `gpt-5.4-nano` model keeps per-run inference cost low while maintaining structured-output reliability.
 
 ## 4. Inputs
 
@@ -351,7 +364,7 @@ Real sample structured output from the latest fixture-or-degraded run on 2026-03
       "evidence": [
         "https://code.claude.com/docs/en/changelog"
       ],
-      "published_at": "2026-03-30T05:57:03.554Z",
+      "published_at": "2026-03-30T06:33:17.392Z",
       "strategic_relevance": "high",
       "confidence": 0.76,
       "status": "updated"
@@ -522,7 +535,6 @@ Fixture mode enabled. Synthetic test data only. OpenAI fixture bundle: API docs 
 - Stored company context: the OpenAI baseline bundle, which captures current public lineup, pricing, and announcement context for relative comparison
 - Industry benchmarks: Scale SWE-bench Pro, LiveBench, LMSYS Arena, Artificial Analysis, and LLM Stats
 - Internal strategy assumptions encoded in the prompts: rumor-only evidence should stay low confidence, benchmark ambiguity should be surfaced instead of guessed, and the audience is Product Strategy rather than press or marketing
-- Current-run collection context: Claude Code changelog (fixture, firecrawl/markdown); Anthropic official announcements (fixture, native/html); Gemini release notes (fixture, firecrawl/markdown); Google Gemini blog (fixture, native/html); Perplexity Comet what's new (fixture, native/html); Perplexity blog (fixture, native/html); Scale SWE-bench Pro public leaderboard (fixture, firecrawl/table); LiveBench leaderboard (fixture, native/table); LMSYS Arena leaderboard (fixture, native/table); Artificial Analysis benchmark dashboard (fixture, native/table); LLM Stats benchmark index (fixture, firecrawl/markdown); OpenAI product and pricing baseline (fixture, firecrawl/markdown); Community buzz: Reddit and GitHub (fixture, native/feed)
 
 ## 8. Tools the Agent Has Access To
 
@@ -539,11 +551,11 @@ Fixture mode enabled. Synthetic test data only. OpenAI fixture bundle: API docs 
 
 ## 9. What the Agent Does Well
 
-- It narrows scope to a realistic set of high-signal competitors and public evidence sources instead of pretending to cover the full market.
-- It reduces cognitive load by converting raw pages, benchmark tables, Reddit threads, and repo metrics into structured monitor batches and then into two markdown artifacts tailored to Product Strategy.
-- It outperforms manual monitoring on cadence and consistency because every source bundle is fetched, normalized, diffed, and analyzed the same way each day.
-- Its structure improves clarity by separating factual source monitoring from the second-pass strategic interpretation and risk scoring.
-- The eval layer gives explicit visibility into prompt regressions and extraction quality rather than relying on qualitative judgment alone.
+- It narrows scope to a realistic set of high-signal competitors and public evidence sources instead of pretending to cover the full market. For example, it monitors the Claude Code changelog as a primary source but treats the broader Anthropic news page as secondary, avoiding the noise of monitoring every Anthropic web surface while still catching product-level changes.
+- It reduces cognitive load by converting raw pages, benchmark tables, Reddit threads, and repo metrics into structured monitor batches and then into two markdown artifacts tailored to Product Strategy. For example, a single Reddit speculation post, two GitHub repo snapshots, and five benchmark leaderboard rows are distilled into a scannable executive summary with per-signal confidence scores, so a VP does not have to visit 13 separate websites each morning.
+- It outperforms manual monitoring on cadence and consistency because every source bundle is fetched, normalized, diffed, and analyzed the same way each day. When the Gemini release-notes page adds a new dated entry, the pipeline detects the content-hash change, runs the monitor agent only on the changed bundle, and surfaces the new entry as a structured signal, all before the workday starts.
+- Its structure improves clarity by separating factual source monitoring from the second-pass strategic interpretation and risk scoring. The raw report preserves per-source evidence and confidence, while the strategy brief synthesizes across sources and assigns a 1-to-100 risk score with explicit rationale, so the reader can drill down from strategic headline to underlying evidence.
+- The eval layer gives explicit visibility into prompt regressions and extraction quality rather than relying on qualitative judgment alone. Each of the 13 monitor agents, the report writer, and the strategy writer has a dedicated JSONL eval dataset and model-graded rubric, so a prompt change that degrades extraction quality is caught before it ships to production.
 
 ## 10. Where the Agent Fails
 
@@ -553,60 +565,3 @@ Fixture mode enabled. Synthetic test data only. OpenAI fixture bundle: API docs 
 - The current production path depends on public web fetches and can fail or degrade when a source blocks automated requests, changes anti-bot behavior, or serves inconsistent markup.
 - A concrete failure that was fixed during implementation: the earlier pipeline silently used fixture payloads when live fetches failed, which made reports look complete while containing synthetic findings. The fix was to mark such runs as partial, emit explicit collection-health warnings, and suppress fake fallback findings.
 
-## Appendix: Strategy Brief Sample
-
-```markdown
-# OpenAI Strategy Brief - 2026-03-30
-
-## Headline
-
-OpenAI remains strong on broad product surface, but distribution and workflow UX pressure are increasing.
-
-## What changed
-
-- Competitors continue packaging agentic workflows around official product surfaces.
-- Benchmark leadership remains fragmented across coding, general reasoning, and public preference boards.
-- Community attention is amplifying expectations for faster product iteration and developer tooling momentum.
-
-## What OpenAI should focus on
-
-- Track browser and agent workflow UX expectations, not just model quality rankings.
-- Watch benchmark categories where OpenAI leadership is narrow or unstable.
-- Respond quickly when official competitor launches combine distribution with differentiated workflow utility.
-
-## Defensive posture
-
-- OpenAI retains a broad public lineup across API, ChatGPT, and multimodal offerings.
-- Benchmark leadership remains competitive across important categories in the monitored bundle.
-- OpenAI exposures:
-- Gemini can use Google distribution to normalize rapid feature rollout at scale.
-- Perplexity is pushing browser-native execution narratives that may shape user expectations.
-
-## Risk score and rationale
-
-- Risk score: 47/100
-- Confidence: 70%
-
-## Supporting evidence
-
-- Official competitor announcement bundles
-- Daily leaderboard bundle
-- Community buzz bundle
-- OpenAI public baseline bundle
-
-## Collection health
-
-- Claude Code changelog: fixture mode is enabled, so this source used synthetic test data instead of a live fetch. Expected extraction path: firecrawl/markdown.
-- Anthropic official announcements: fixture mode is enabled, so this source used synthetic test data instead of a live fetch. Expected extraction path: native/html.
-- Gemini release notes: fixture mode is enabled, so this source used synthetic test data instead of a live fetch. Expected extraction path: firecrawl/markdown.
-- Google Gemini blog: fixture mode is enabled, so this source used synthetic test data instead of a live fetch. Expected extraction path: native/html.
-- Perplexity Comet what's new: fixture mode is enabled, so this source used synthetic test data instead of a live fetch. Expected extraction path: native/html.
-- Perplexity blog: fixture mode is enabled, so this source used synthetic test data instead of a live fetch. Expected extraction path: native/html.
-- Scale SWE-bench Pro public leaderboard: fixture mode is enabled, so this source used synthetic test data instead of a live fetch. Expected extraction path: firecrawl/table.
-- LiveBench leaderboard: fixture mode is enabled, so this source used synthetic test data instead of a live fetch. Expected extraction path: native/table.
-- LMSYS Arena leaderboard: fixture mode is enabled, so this source used synthetic test data instead of a live fetch. Expected extraction path: native/table.
-- Artificial Analysis benchmark dashboard: fixture mode is enabled, so this source used synthetic test data instead of a live fetch. Expected extraction path: native/table.
-- LLM Stats benchmark index: fixture mode is enabled, so this source used synthetic test data instead of a live fetch. Expected extraction path: firecrawl/markdown.
-- OpenAI product and pricing baseline: fixture mode is enabled, so this source used synthetic test data instead of a live fetch. Expected extraction path: firecrawl/markdown.
-- Community buzz: Reddit and GitHub: fixture mode is enabled, so this source used synthetic test data instead of a live fetch. Expected extraction path: native/feed.
-```
