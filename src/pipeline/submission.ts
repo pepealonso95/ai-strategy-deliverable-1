@@ -11,6 +11,7 @@ export async function buildSubmissionMarkdown(args: {
   monitorBatches: MonitorBatch[];
   sourceHealth: SourceHealth[];
 }) {
+  const repoUrl = "https://github.com/pepealonso95/ai-strategy-deliverable-1";
   const getSource = (id: string) => SOURCE_REGISTRY.find((source) => source.id === id)!;
   const officialSources = [
     getSource("claude-code-changelog"),
@@ -62,6 +63,8 @@ export async function buildSubmissionMarkdown(args: {
   const communityUrlSummary = communitySource.urls.map((url) => `\`${url}\``).join(", ");
 
   return `# Submission
+
+Repository: ${repoUrl}
 
 ## 1. Company and Strategic Context
 

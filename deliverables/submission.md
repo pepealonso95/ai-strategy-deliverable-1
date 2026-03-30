@@ -1,5 +1,7 @@
 # Submission
 
+Repository: https://github.com/pepealonso95/ai-strategy-deliverable-1
+
 ## 1. Company and Strategic Context
 
 OpenAI is the selected company. It operates in the frontier AI industry with a business model spanning API usage, subscriptions, and enterprise offerings; the key competitors in scope are Anthropic, Google Gemini, and Perplexity, and the internal stakeholder is Product Strategy leadership.
