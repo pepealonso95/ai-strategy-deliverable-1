@@ -1,0 +1,9 @@
+.next
+node_modules
+.vercel
+.local-store
+.env
+.env.local
+coverage
+.DS_Store
+tsconfig.tsbuildinfo
