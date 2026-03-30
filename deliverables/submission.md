@@ -345,122 +345,124 @@ Real sample structured output from the latest live run on 2026-03-30:
 
 ```json
 {
-  "agent_name": "anthropic_monitor",
+  "agent_name": "Anthropic Monitor",
   "source_id": "anthropic-news",
   "source_label": "Anthropic official announcements",
   "competitor": "anthropic",
   "is_material": true,
-  "executive_summary": "Anthropic’s latest newsroom updates include multiple product-adjacent announcements: a new/further model performance focus (Sonnet 4.6 and an Opus 4.6 upgrade), an explicit commitment to remain ad-free, and several enterprise/ecosystem moves (Claude Partner Network investment, a new Anthropic Institute, expanded Asia-Pacific footprint via an office in Sydney, plus other policy/partnership content). Because there is no prior snapshot, all items are treated as new.",
+  "executive_summary": "Initial snapshot (no prior to compare). The Anthropic news surface highlights several potentially material updates: a stated decision to keep Claude ad-free while expanding access, a reported upgrade framing around Opus 4.6 (agentic coding/computer/tool use/search/finance), and multiple company/enterprise moves (Claude Partner Network investment, Anthropic Institute, new Asia-Pacific office in Sydney, acquisition of Vercept for computer use capabilities, and Mozilla Firefox security partnership).",
   "signals": [
     {
-      "id": "anthropic-news-2026-03-30-model-upgrade-sonnet-4-6-opus-4-6",
+      "id": "anthropic-news-2026-03-30-adfree-choice",
       "run_date": "2026-03-30",
       "competitor": "anthropic",
-      "source_name": "Anthropic Newsroom (anthropic.com/news)",
+      "source_name": "Anthropic Newsroom",
       "source_url": "https://www.anthropic.com/news",
-      "signal_type": "model_upgrade_or_performance_claims",
-      "headline": "Sonnet 4.6 and Opus 4.6 positioned as improved frontier performance across coding and agentic workloads",
-      "summary": "Newsroom highlights Sonnet 4.6 delivering “frontier performance” and an upgrade to Opus 4.6, emphasizing agentic coding, computer/tool use, search, and finance.",
+      "signal_type": "messaging/policy - advertising stance",
+      "headline": "Anthropic reiterates decision to keep Claude ad-free while expanding access",
+      "summary": "Newsroom content states that Claude will remain ad-free and explains the rationale and intent to expand access without compromising user trust.",
       "evidence": [
-        "Sonnet 4.6 delivers frontier performance across coding, agents, and professional work at scale.",
-        "We’re upgrading our smartest model. Across agentic coding, computer use, tool use, search, and finance, Opus 4.6 is an industry-leading model, often by wide margin."
+        "\"We’ve made a choice: Claude will remain ad-free.\"",
+        "\"We explain why advertising incentives are incompatible with a genuinely helpful AI assistant\"",
+        "\"how we plan to expand access without compromising user trust.\""
       ],
       "published_at": null,
       "strategic_relevance": "high",
-      "confidence": 0.74,
+      "confidence": 0.68,
       "status": "new"
     },
     {
-      "id": "anthropic-news-2026-03-30-ad-free-commitment",
+      "id": "anthropic-news-2026-03-30-opus-4-6-upgrade",
       "run_date": "2026-03-30",
       "competitor": "anthropic",
-      "source_name": "Anthropic Newsroom (anthropic.com/news)",
+      "source_name": "Anthropic Newsroom",
       "source_url": "https://www.anthropic.com/news",
-      "signal_type": "messaging_pricing_or_business_model",
-      "headline": "Claude will remain ad-free; access expansion framed as compatible with user trust",
-      "summary": "Anthropic reiterates a business-messaging commitment that Claude remains ad-free, and states advertising incentives are incompatible with a genuinely helpful assistant while describing intent to expand access without compromising trust.",
+      "signal_type": "product/model positioning - model upgrade",
+      "headline": "Opus 4.6 upgrade framed as strong performance across agentic work (coding/tool use/search/finance)",
+      "summary": "Newsroom text describes an upgrade of the “smartest model,” positioning Opus 4.6 as industry-leading across several agentic and professional-task categories.",
       "evidence": [
-        "We’ve made a choice: Claude will remain ad-free. We explain why advertising incentives are incompatible with a genuinely helpful AI assistant, and how we plan to expand access without compromising user trust."
+        "\"We’re upgrading our smartest model.\"",
+        "\"Across agentic coding, computer use, tool use, search, and finance, Opus 4.6 is an industry-leading model, often by wide margin.\""
       ],
       "published_at": null,
       "strategic_relevance": "high",
-      "confidence": 0.7,
+      "confidence": 0.6,
       "status": "new"
     },
     {
       "id": "anthropic-news-2026-03-30-partner-network-investment",
       "run_date": "2026-03-30",
       "competitor": "anthropic",
-      "source_name": "Anthropic Newsroom (anthropic.com/news)",
+      "source_name": "Anthropic Newsroom",
       "source_url": "https://www.anthropic.com/news",
-      "signal_type": "enterprise_partnerships_ecosystem",
-      "headline": "$100M investment into the Claude Partner Network announced (Mar 12, 2026)",
-      "summary": "Anthropic announces an investment of $100M into the Claude Partner Network, indicating scaling of its partner ecosystem.",
+      "signal_type": "business/enterprise - partner network investment",
+      "headline": "$100M investment into the Claude Partner Network",
+      "summary": "The page lists an announcement that Anthropic is investing $100 million into the Claude Partner Network.",
       "evidence": [
-        "Mar 12, 2026AnnouncementsAnthropic invests $100 million into the Claude Partner Network"
+        "\"Mar 12, 2026AnnouncementsAnthropic invests $100 million into the Claude Partner Network\""
       ],
       "published_at": "2026-03-12",
       "strategic_relevance": "high",
-      "confidence": 0.68,
+      "confidence": 0.55,
       "status": "new"
     },
     {
       "id": "anthropic-news-2026-03-30-anthropic-institute",
       "run_date": "2026-03-30",
       "competitor": "anthropic",
-      "source_name": "Anthropic Newsroom (anthropic.com/news)",
+      "source_name": "Anthropic Newsroom",
       "source_url": "https://www.anthropic.com/news",
-      "signal_type": "enterprise_research_or_program_launch",
-      "headline": "Introducing The Anthropic Institute (Mar 11, 2026)",
-      "summary": "Anthropic introduces The Anthropic Institute, signaling a new institutional/program initiative; details are not present in the bundle snippet.",
+      "signal_type": "organization/enterprise - institute launch",
+      "headline": "Introducing The Anthropic Institute",
+      "summary": "The page lists an announcement introducing “The Anthropic Institute.”",
       "evidence": [
-        "Mar 11, 2026AnnouncementsIntroducing The Anthropic Institute"
+        "\"Mar 11, 2026AnnouncementsIntroducing The Anthropic Institute\""
       ],
       "published_at": "2026-03-11",
       "strategic_relevance": "medium",
-      "confidence": 0.5,
+      "confidence": 0.45,
       "status": "new"
     },
     {
       "id": "anthropic-news-2026-03-30-sydney-office",
       "run_date": "2026-03-30",
       "competitor": "anthropic",
-      "source_name": "Anthropic Newsroom (anthropic.com/news)",
+      "source_name": "Anthropic Newsroom",
       "source_url": "https://www.anthropic.com/news",
-      "signal_type": "distribution_or_global_expansion",
-      "headline": "Sydney to become Anthropic’s fourth Asia-Pacific office (Mar 10, 2026)",
-      "summary": "Anthropic plans to add an office in Sydney as its fourth Asia-Pacific location, indicating continued global footprint expansion.",
+      "signal_type": "distribution/operations - new office",
+      "headline": "Sydney to become Anthropic’s fourth Asia-Pacific office",
+      "summary": "The page lists an announcement that Sydney will become Anthropic’s fourth office in Asia-Pacific.",
       "evidence": [
-        "Mar 10, 2026AnnouncementsSydney will become Anthropic’s fourth office in Asia-Pacific"
+        "\"Mar 10, 2026AnnouncementsSydney will become Anthropic’s fourth office in Asia-Pacific\""
       ],
       "published_at": "2026-03-10",
       "strategic_relevance": "medium",
-      "confidence": 0.62,
+      "confidence": 0.5,
       "status": "new"
     },
     {
-      "id": "anthropic-news-2026-03-30-mozilla-partnership",
+      "id": "anthropic-news-2026-03-30-vercept-acquisition",
       "run_date": "2026-03-30",
       "competitor": "anthropic",
-      "source_name": "Anthropic Newsroom (anthropic.com/news)",
+      "source_name": "Anthropic Newsroom",
       "source_url": "https://www.anthropic.com/news",
-      "signal_type": "policy_partnership_security",
-      "headline": "Partnering with Mozilla to improve Firefox’s security (Mar 6, 2026)",
-      "summary": "Anthropic announces a partnership with Mozilla focused on improving Firefox’s security; details are not included in the snippet.",
+      "signal_type": "acquisition/product capability - computer use",
+      "headline": "Anthropic acquires Vercept to advance Claude’s computer use capabilities",
+      "summary": "The page lists an announcement that Anthropic acquires Vercept to advance Claude’s computer use capabilities.",
       "evidence": [
-        "Mar 6, 2026PolicyPartnering with Mozilla to improve Firefox’s security"
+        "\"Feb 25, 2026AnnouncementsAnthropic acquires Vercept to advance Claude's computer use capabilities\""
       ],
-      "published_at": "2026-03-06",
-      "strategic_relevance": "medium",
-      "confidence": 0.56,
+      "published_at": "2026-02-25",
+      "strategic_relevance": "high",
+      "confidence": 0.6,
       "status": "new"
     }
   ],
   "benchmark_snapshots": [],
   "repo_metrics": [],
   "notes": [
-    "No previous snapshot was available (previous_snapshot: null), so change status is marked as 'new' for the detected headlines.",
-    "Evidence comes from the Anthropic newsroom landing-page text/snippet included in the source bundle; specific article details beyond the listed headlines are not provided in the bundle."
+    "No previous snapshot was provided (previous_snapshot is null), so all listed items are treated as newly observed in this run.",
+    "This report is limited to Anthropic official announcements/news surface content from https://www.anthropic.com/news and does not incorporate Claude Code changelog developer-product details."
   ]
 }
 ```
@@ -471,113 +473,101 @@ Sample raw markdown output (truncated to executive summary):
 # Raw Competitor Intelligence Report — 2026-03-30
 
 ## Executive summary
-- **Anthropic (official signals):** Evidence points to a **Sonnet 4.6 + Opus 4.6 upgrade positioning** around “frontier performance” for coding/agentic workloads, plus a **business-messaging push** that Claude will remain **ad-free**, alongside multiple **enterprise/ecosystem expansions** (Claude Partner Network investment, Anthropic Institute, Sydney office, Mozilla security partnership). *(New items; no prior snapshot for delta.)*
-- **Gemini (release notes):** Concrete customer-facing updates include **import/switching tools** for bringing **memories + full chat history** from other apps, **Gemini 3.1 Pro** global rollout with higher limits, and **Deep Think** upgrade for AI Ultra subscribers; additional **Chrome** integration and **Personal Intelligence** beta. *(New items; no prior snapshot for delta.)*
-- **Perplexity (changelog):** Multiple concrete workflow enhancements for **Search/API + agentic execution**, including media-aware crawling controls, **last-updated filtering**, **Vercel AI SDK compatibility**, and “search-only” modes; plus **document analysis/extraction** and **MCP/IDE tooling**.
-- **Market benchmarks (evidence available, but limited by extraction quality):**
-  - **Scale SWE-bench Pro:** Only partial capture; two entries both appear as **rank=1** with **score 45.89 (Claude Opus 4.5)** and **score 43.6 (Claude 4.5 Sonnet)**—but rank is marked **ambiguous** due to parse artifacts.
-  - **LMSYS Arena (Text):** Current leaderboard evidence shows **Anthropic leading #1–#2** with **claude-opus-4-6-thinking** (#1) and **claude-opus-4-6** (#2), with **Gemini #3**.
-  - **Artificial Analysis:** First snapshot; **top-tier tie at 57** between **Gemini 3.1 Pro Preview** and **GPT-5.4 (xhigh)**, with **Claude Opus 4.6 (max) at 53** and **Claude Sonnet 4.6 (max) at 52**.
-  - **LLM Stats:** Treated mainly as **supporting context** (it’s an index/featured cards page; no movement assessment possible).
-- **Community buzz (directional):** Local-inference tooling momentum (llama.cpp acceleration, ANE backend, MCP/context compression) and **a high-visibility TurboQuant vs RaBitQ dispute** with disclosure/methodology allegations.
+- **Anthropic (Claude/Claude Code ecosystem)**: Official news highlights several **high-intent moves**: keeping **Claude ad-free** while expanding access, framing **Opus 4.6** as a top-performing “smartest model” across agentic work, and multiple enterprise/capability expansions (e.g., **$100M Claude Partner Network** investment and **Vercept acquisition** for computer use).
+- **Gemini (Google)**: Release notes emphasize **product surface expansion** (memory/chat-history import, connected apps “Personal Intelligence” beta) and **model upgrades** (notably **Gemini 3.1 Pro global rollout** and **Gemini 3 Deep Think** upgrade for AI Ultra).
+- **Perplexity (Comet/Search API + embeddings)**: Changelog signals **developer workflow improvements** for the Search API (token/cost controls, freshness filtering, SDK compatibility, auto routing, multi-step fetch execution), plus a **new embeddings-model release** noted in the Perplexity Research articles index.
+- **Benchmark signals (agentic performance)**: In *supporting* agent-benchmark context (not SWE-agent risk): **Artificial Analysis AA-AgentPerf** shows **Gemini 3.1 Pro Preview** and **GPT-5.4 (xhigh)** tied at the top (score **57**) with **Claude Opus 4.6 (max)** at **53**.
+- **Market leaderboards**: **LMSYS Arena (Text)** currently places **Claude Opus 4.6 variants** at the very top, followed closely by **Gemini**, then **Grok/GPT** in the top-10. No movement can be confirmed vs prior because this run lacked a prior snapshot.
+- **OpenAI baseline (context)**: OpenAI Models API shows an active lineup centered on **GPT-5.x** plus **Codex** variants and **search/realtime/audio/image/TTS** endpoints; safety/security updates include a **Safety Bug Bounty** and Model Spec approach.
+
+## Official competitor signals
+### Anthropic — official announcements (material)
 ```
 
 Sample strategy brief output from the same run:
 
 ```markdown
-# Strategy Memo: Competitor Watch — 2026-03-30
+# Strategy Memo: Competitive Watch & Positioning (2026-03-30)
 
 ## Headline
-Anthropic and Gemini are both making concrete, product-facing moves—Anthropic with a clear **frontier-performance coding/agentic positioning (Sonnet 4.6 + Opus 4.6)** plus enterprise/ecosystem expansion, and Gemini with **import/switching tools (memories + full chat history), global rollout of Gemini 3.1 Pro, and richer Chrome/Personal Intelligence connectivity**. Perplexity continues to tighten its “search + agentic execution” developer surface (tooling, filters, streaming). OpenAI should respond by protecting coding-agent leadership on the most decision-relevant benchmark we can track (**Scale SWE-bench Pro**) while matching competitors’ momentum in **connectivity, workflow reliability, and agent/tool ergonomics**.
+Anthropic and Gemini are accelerating **high-intent “agent UX”** (computer-use capability expansion, memory/chat-history portability, connected-app personal intelligence) while Perplexity is improving **developer search agent ergonomics** (freshness + cost controls + multi-step fetching + embeddings). OpenAI’s immediate watch should be less on generic chat quality and more on **agentic workflows, tool/search controllability, and state/memory portability**—especially where benchmarks with coding-agent relevance are strengthening, even if the most decision-critical coding benchmark (Scale SWE-bench Pro) lacked structured deltas in this report.
 
 ## What changed
-**Anthropic (official signals, new observations)**
-- **Sonnet 4.6 + Opus 4.6** framed as “frontier performance” across **coding, agents, tool use, search, finance**, with Opus often “by wide margin.”
-- **Claude remains ad-free** (explicit commitment).
-- **Enterprise/ecosystem investments**: $100M into **Claude Partner Network**, plus organizational expansions (Institute, Sydney office, Mozilla security partnership).
+1. **Anthropic (official): agent/computer-use + enterprise ecosystem investment**
+   - Claude remains **ad-free** while access expands (trust positioning).
+   - **Opus 4.6 upgrade** is explicitly marketed as top-performing across **agentic/tool/computer use/search/finance**.
+   - **$100M investment** into the **Claude Partner Network**.
+   - **Vercept acquisition** to advance **Claude computer-use** capabilities.
 
-**Gemini (official release notes, new observations)**
-- **Consumer switching/import tools**: settings-based switching to import **memories + full chat history** from other apps; renaming “past chats” → “memories.”
-- **Gemini 3.1 Pro**: **global rollout** with higher limits for AI Pro/Ultra tiers.
-- **Deep Think upgrade**: major upgrade for AI Ultra subscribers.
-- **Chrome integration**: side panel + broader Google app integration; **auto-browse preview** in the U.S. (for Pro/Ultra).
-- **Personal Intelligence beta**: connects Gemini to **Gmail/Photos/YouTube/Search** (not available to Workspace business/education).
+2. **Gemini (release notes): memory + connected-app intelligence + model tier rollout**
+   - Rollout of **memory import** and **full chat history import** via tool switching (ZIP import; past chats → memories).
+   - **Gemini 3.1 Pro** global rollout in the Gemini app.
+   - **Deep Think** upgrade for AI Ultra subscribers.
+   - Product surface expansion: Chrome refresh/side panel/auto-browse preview (US), plus “Personal Intelligence” beta connecting to Google apps (off by default, user-controlled).
 
-**Perplexity (changelog, new observations)**
-- Expanding search-agent developer controls and execution quality:
-  - **Media-aware crawling controls** and extraction parameterization.
-  - **last_updated_filter**.
-  - **Search API compatibility with Vercel AI SDK**.
-  - Multi-step **agentic search execution** with tool routing + real-time thought streaming.
-  - **MCP/IDE integration setup improvements**.
-  - **Document analysis/extraction** across formats.
-  - A **search-only application mode**.
+3. **Perplexity (changelog): developer-grade search agent controls + embeddings**
+   - **`max_tokens`** for response size/cost control.
+   - **`last_updated_filter`** for freshness filtering.
+   - **SDK compatibility** (Vercel AI SDK).
+   - **Multi-step web searches + URL content fetching** for complex queries.
+   - **Real-time thought streaming**.
+   - **`search_type: "auto"` routing**.
+   - New embeddings: **`pplx-embed-v1`** and **`pplx-embed-context-v1`**.
 
-**Benchmarks / leaderboard context (coding-agent prioritized)**
-- **Scale SWE-bench Pro**: evidence is incomplete/parse-fragile (rank ambiguous), so treat as *directional only*. Extracted entries suggest top-tier presence by Anthropic models in the captured snippet, but we cannot claim movement.
-- **LMSYS Arena (Text)**: Anthropic (claude opus 4.6 thinking / opus 4.6) leads #1–#2; Gemini 3.1 Pro preview is #3; OpenAI appears in top-10 excerpt.
-- **Artificial Analysis**: first snapshot; top excerpt shows **Gemini 3.1 Pro Preview and GPT-5.4 (xhigh)** tied at 57, with Anthropic 4.6 variants next.
+4. **Bench/market signals (limited delta visibility)**
+   - **Artificial Analysis (AA-AgentPerf)** shows a top tier where **Gemini 3.1 Pro Preview** and **GPT-5.4 (xhigh)** are tied for rank 1 (score 57); **Claude Opus 4.6 (max)** at 53.
+   - **LMSYS Arena (Text)** snapshot has Claude Opus 4.6 variants at #1–2, Gemini close behind; but **no prior snapshot** means no movement can be asserted.
+   - **Scale SWE-bench Pro** and **LiveBench**: the report could not extract usable structured rows/scores, so **no coding-agent risk delta** can be computed from this run.
 
 ## What OpenAI should focus on
-1. **Defend coding-agent performance with measurable rigor (Scale SWE-bench Pro priority)**
-   - Ensure our internal eval pipeline for agentic coding is aligned with Scale SWE-bench Pro setup and that we can reproduce public-style reporting reliably.
-   - Goal: prevent competitor narrative advantage from turning into durable “best agent” perception even when public leaderboard parsing is messy.
+1. **Agentic UX parity with “stateful” experiences**
+   - Gemini’s memory/chat-history import and Anthropic’s computer-use expansion both increase perceived “stickiness” and autonomy.
+   - Focus: make OpenAI’s agent frameworks and product surfaces (Assistants/Agents, tools, retrieval/memory) **portable, controllable, and auditable**.
 
-2. **Match “workflow reliability” and “tool surface” improvements**
-   - Perplexity’s changelog emphasizes controls (filters, extraction params), streaming behavior, SDK compatibility, and “search-only” mode.
-   - OpenAI should prioritize:
-     - predictable tool execution + graceful fallbacks,
-     - first-class SDK ergonomics for search/tool pipelines,
-     - mode-switching that reduces latency/cost for “search-first” tasks.
+2. **Tool/search controllability for developers (cost, freshness, routing, multi-step)**
+   - Perplexity’s Search API improvements map directly to developer pain: cost predictability (`max_tokens`), recency (`last_updated_filter`), and orchestration (`auto` routing + multi-step fetch).
+   - Focus: ensure OpenAI’s search/tooling stack offers similarly crisp developer levers (and strong observability) to compete in agent pipelines.
 
-3. **Compete on connectivity + switching (Gemini’s strongest product moat in this report)**
-   - Gemini’s consumer switching/import for **memories + full chat history** is a retention and migration play.
-   - OpenAI should watch for demand shifts toward “assistant portability” and reduce friction for importing histories/settings.
+3. **Computer-use + enterprise ecosystem defensibility**
+   - Anthropic’s Vercept acquisition and Partner Network investment point to ecosystem flywheels.
+   - Focus: deepen OpenAI’s enterprise partner and integration paths for agent workflows (secure compute, supported deployment patterns, and standardized agent evaluation/telemetry).
 
-4. **Reinforce enterprise trust and ecosystem credibility (Anthropic’s ad-free + partnerships)**
-   - Anthropic is pushing trust signals (ad-free) alongside ecosystem distribution.
-   - OpenAI should strengthen enterprise messaging around safety/controls, data handling, and admin-grade governance—then pair it with distribution partnerships where appropriate.
+4. **Benchmark strategy (given missing SWE-bench Pro deltas)**
+   - Treat AA-AgentPerf as partial reassurance (top-tier tie), but **do not assume coding-agent safety/quality parity**.
+   - Focus: prioritize internal/regression evals aligned to **Scale SWE-bench Pro** and agentic coding suites with tool-use to regain “decision-grade” confidence.
 
 ## Defensive posture
-- **Do not over-index on preference/aggregate leaderboards** (LMSYS Arena, Artificial Analysis) as primary proof of coding-agent leadership—use them as perception signals.
-- **Treat Scale SWE-bench Pro as the key coding-agent benchmark**, but improve our confidence in public reporting comparability (the current extraction quality is insufficient to drive confident “we gained/lost” conclusions).
-- **Operationally harden agentic tooling**: invest in determinism, tool-use guardrails, and debugging telemetry so agentic workflows don’t regress when tool ecosystems change (MCP/IDE integration is moving quickly).
+- **Defend state + tool orchestration as first-class product properties** (not just model quality): memory portability, audit trails, permissions, and deterministic cost controls.
+- **Increase developer control-plane clarity**: provide explicit parameters and policy surfaces for freshness, budget, routing, and multi-step execution; add strong SDK ergonomics and streaming that support agent UX.
+- **Counter ecosystem lock-in**: accelerate enterprise integrations and partner programs with measurable outcomes (time-to-first-agent, reliability SLAs, and security/compliance documentation).
+- **Benchmark confirmation loop**: rerun/secure structured extraction for **Scale SWE-bench Pro** and **LiveBench** so that future risk scoring can be tied to actual coding-agent deltas.
 
 ## Risk score and rationale
-- **Risk score: 66 / 100**
-- **Rationale (fact vs inference):**
-  - **Fact**: Anthropic and Gemini released multiple explicit, dated, product-level improvements (performance positioning, import/switching tools, connectivity in Chrome/apps, Perplexity’s agentic search tooling).
-  - **Fact**: Coding-agent benchmark evidence is **insufficiently parsed** for confident movement claims on Scale SWE-bench Pro.
-  - **Inference**: Competitors’ moves plausibly strengthen user retention and developer mindshare (switching/import + connectivity + SDK compatibility), which increases risk to OpenAI’s product adoption—hence a moderate-high score, but not >70.
-  - **Rule compliance**: Not exceeding 70 because we lack corroborated, high-confidence, decision-grade coding-agent benchmark movement in this run.
+- **Risk score: 62 / 100**
+- **Confidence: 0.61**
+
+**Rationale (fact vs inference):**
+- **Facts supporting elevated risk:** competitors’ *official* release/changelog items show momentum in (a) stateful memory/chat history, (b) connected-app intelligence, (c) computer-use capability expansion, and (d) developer-grade search agent controls plus embeddings.
+- **Why not higher (>70):** this run lacks structured evidence for the most decision-relevant coding benchmark (Scale SWE-bench Pro) and lacks confirmed movement on LMSYS (no prior snapshot). AA-AgentPerf top-of-board includes OpenAI (GPT-5.4 xhigh tied at rank 1), which partially offsets coding-agent concern.
+- **Inference:** the risk assumes these product/agent improvements translate into near-term user and developer adoption shifts; that link is plausible but not directly quantified in the report.
 
 ## Supporting evidence
-- **Anthropic** (anthropic.com/news):
-  - “Sonnet 4.6 … frontier performance” across coding/agents/tool use/search/finance.
-  - “Claude will remain ad-free.”
-  - “$100 million” investment into **Claude Partner Network**.
-  - Announcements: Anthropic Institute, Sydney office, Mozilla security partnership.
-
-- **Gemini** (gemini.google/release-notes/):
-  - 2026-03-26: **switching tools** to import **memories + full chat history**.
-  - 2026-02-19: **Gemini 3.1 Pro global rollout** and higher limits for AI Pro/Ultra.
-  - 2026-02-12: **Deep Think** major upgrade for AI Ultra.
-  - 2026-01-28: Chrome integration + **auto-browse preview** (U.S.).
-  - 2026-01-20: Personal Intelligence beta connecting to Gmail/Photos/YouTube/Search.
-
-- **Perplexity** (docs.perplexity.ai changelog):
-  - Media-aware crawler controls + extraction token controls.
-  - **last_updated_filter**.
-  - Search API compatibility with **Vercel AI SDK**.
-  - Agentic multi-step execution + tool routing + real-time thought streaming.
-  - MCP/IDE integration setup improvements.
-  - Document analysis/extraction across formats.
-  - “Search-only” application mode.
-
-- **Benchmarks**:
-  - Scale SWE-bench Pro (labs.scale.com): extracted snippet exists but ranked-table parsing is ambiguous/fragile.
-  - LMSYS Arena (lmarena.ai): Anthropic leads #1–#2 with **claude-opus-4-6(-thinking)**; Gemini 3.1 Pro preview #3; OpenAI in top-10 excerpt.
-  - Artificial Analysis (artificialanalysis.ai): top excerpt shows **Gemini 3.1 Pro Preview** and **GPT-5.4 (xhigh)** tied at 57.
+- **Anthropic (official news):**
+  - Claude remains **ad-free** while expanding access.
+  - **Opus 4.6** positioned as “upgrading our smartest model” across agentic/tool/computer/search workflows.
+  - **$100M** investment into **Claude Partner Network**.
+  - **Vercept acquisition** to advance **computer-use**.
+- **Gemini (release notes):**
+  - Memory/chat-history import via switching tools; ZIP chat history import; past chats → memories.
+  - **Gemini 3.1 Pro** global rollout.
+  - Connected-app **Personal Intelligence** beta.
+- **Perplexity (changelog + docs):**
+  - Search API adds **`max_tokens`**, **`last_updated_filter`**, **multi-step fetch execution**, **`search_type: "auto"` routing**, **Vercel AI SDK compatibility**.
+  - Embeddings release: **`pplx-embed-v1`** and **`pplx-embed-context-v1`**.
+- **Benchmarks/market (snapshot):**
+  - **AA-AgentPerf:** GPT-5.4 (xhigh) tied rank 1 (score 57) with Gemini 3.1 Pro Preview; Claude Opus 4.6 (max) at 53.
+  - **LMSYS Arena (Text):** Claude Opus 4.6 variants in top positions; no movement attribution available.
+- **Data limitation:** Scale SWE-bench Pro and LiveBench did not yield structured coding-agent rows/scores in this report, preventing a true delta-based coding risk assessment.
 ```
 
 ## 6. Knowledge Sources Used
